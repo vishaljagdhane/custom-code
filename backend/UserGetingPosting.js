@@ -42,6 +42,42 @@ Opreation_Router.get('/userData', (req, res) => {
     });
 });
 
+// Update user data
+Opreation_Router.put('/updateUser/:id', (req, res) => {
+  const { id } = req.params;
+  const { fname, lname, mobile, email, password } = req.body;
+
+  const updateQuery = `UPDATE userregister 
+                       SET fname = ?, lname = ?, mobile = ?, email = ?, password = ?
+                       WHERE srnumber = ?`;
+
+  Connection_Module.query(updateQuery, [fname, lname, mobile, email, password, id], (error, results) => {
+    if (error) {
+      console.error('Error updating data:', error);
+      res.status(500).json({ error: 'Failed to update data' });
+    } else {
+      res.status(200).json({ message: 'User updated successfully' });
+    }
+  });
+});
+
+// Delete user data
+Opreation_Router.delete('/deleteUser/:id', (req, res) => {
+  const { id } = req.params;
+
+  const deleteQuery = `DELETE FROM userregister WHERE srnumber = ?`;
+
+  Connection_Module.query(deleteQuery, [id], (error, results) => {
+    if (error) {
+      console.error('Error deleting data:', error);
+      res.status(500).json({ error: 'Failed to delete user' });
+    } else {
+      res.status(200).json({ message: 'User deleted successfully' });
+    }
+  });
+});
+
+
 
 module.exports = Opreation_Router;
 

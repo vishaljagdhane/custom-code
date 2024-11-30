@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Grid, Typography, Container } from '@mui/material';
 import axios from 'axios';
+import ApiServices from '../ApiServes/ApiServices'
 
 
 
 export default function UserRegisterPage() {
+  
 const [userDataGet, setUserDataGet] = useState({fname:'',lname:'',mobile:'',email:'',password:''})
+const {PostUserData} = ApiServices(userDataGet);
 const gettingData =(e)=>{
     setUserDataGet({...userDataGet,[e.target.name]:e.target.value})
     console.log(userDataGet)
@@ -15,7 +18,9 @@ const UserPostinData = async (e) => {
     // e.preventDefault(); // Prevent form submission if you're using this in a form.
   
     try {
-        const response = await axios.post('http://localhost:4100/api/userDataPost', userDataGet);
+        // const response = await axios.post('http://localhost:4100/api/userDataPost', userDataGet);
+
+        const response = await PostUserData(userDataGet)
         setUserDataGet({fname:'',lname:'',mobile:'',email:'',password:''})
       console.log(response.data); // Log the response from the API
     } catch (err) {
@@ -62,6 +67,7 @@ const UserPostinData = async (e) => {
                         >
                             {/* First Name */}
                             <TextField
+                                autoComplete="off"
                                 label="First Name"
                                 variant="outlined"
                                 fullWidth
