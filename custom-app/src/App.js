@@ -7,15 +7,7 @@ import UserDataTable from './UserLog/UserDataTable';
 function App() {
   return (
     <>
-<BrowserRouter>
-<Routes>
- <Route path='/' element={<UserRegisterPage/>}></Route>
- <Route path='/UserDataTable' element={<UserDataTable/>}></Route>
-
-
-</Routes>
-
-</BrowserRouter>
+<h1>Project Is In-progress</h1>
     </>
   );
 }

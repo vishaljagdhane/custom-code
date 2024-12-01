@@ -29,13 +29,14 @@ const UserPostinData = async (e) => {
     }
   };
 
+
     return (
         <>
-
-
             <Box sx={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#E3F2FD', }}>
              
               
+]
+
                 <Container component="main" maxWidth="xs">
                     <Box
                         sx={{

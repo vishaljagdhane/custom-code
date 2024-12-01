@@ -1,6 +1,8 @@
 import axios from "axios";
 // ApiServices.js
 export default function ApiServices() {
+
+    
     const baseurl = process.env.REACT_APP_API_URL; // Make sure this is set correctly in your .env file
 
     // Function to fetch user data
@@ -38,6 +40,10 @@ export default function ApiServices() {
         }
     };
 
+    const LoginUserApi = async (LoginData)=>{
+
+    }
+
     // Return the function so it can be used in other components
-    return { getUserData ,PostUserData,EditUserData};
+    return { getUserData ,PostUserData,EditUserData,LoginUserApi};
 }
