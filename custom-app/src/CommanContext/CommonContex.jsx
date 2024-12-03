@@ -1,9 +1,22 @@
-import React from 'react'
+import React,{createContext,useState} from 'react'
+ 
 
-export default function CommonContex() {
+export const DataProvder = createContext();
+
+
+ export default function CommonContex({children }) {
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const ContextValue={
+    username,setUserName,password,setPassword
+  }
+
   return (
-    <div>
-      
-    </div>
+   <DataProvder.Provider value={ContextValue}>
+    {children}
+
+
+   </DataProvder.Provider>
   )
 }
