@@ -83,7 +83,7 @@ export default function Applications_Dashboard() {
             }}
           >
             {/* Render the page content based on the selected menu item */}
-            <Box sx={{position:'relative',padding:2}}>
+            <Box sx={{position:'relative',padding:'5px'}}>
             {currentPage ? currentPage.page : <h1>Loading...</h1>}
             </Box>
           </Box>

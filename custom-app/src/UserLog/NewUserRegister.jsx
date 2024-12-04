@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TextField, Button, Grid, Box, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Grid, Box, Typography, Link, FormHelperText } from '@mui/material';
 
 export default function NewUserRegister() {
   const [formData, setFormData] = useState({
@@ -11,18 +11,82 @@ export default function NewUserRegister() {
     confirmPassword: ''
   });
 
+  const [passwordStrength, setPasswordStrength] = useState('');
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+  // Handle form input changes
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+
+    if (name === 'password') {
+      evaluatePasswordStrength(value);
+    }
   };
 
+  // Validate password strength (minimum 10 characters, alphanumeric)
+  const evaluatePasswordStrength = (password) => {
+    if (password.length >= 10 && /[a-zA-Z]/.test(password) && /\d/.test(password)) {
+      setPasswordStrength('Strong');
+      setIsPasswordValid(true);
+    } else {
+      setPasswordStrength('Weak');
+      setIsPasswordValid(false);
+    }
+  };
+
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add form submission logic here (e.g., API call)
     console.log(formData);
   };
+
+  // Redirect to Google's OAuth endpoint
+  const redirectToGoogleLogin = () => {
+    const clientId = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your Google OAuth client ID
+    const redirectUri = 'http://localhost:3000/callback'; // The redirect URI you set in Google Console
+    const scope = 'openid profile email'; // Scopes to get user info
+    const responseType = 'token'; // We want an access token
+
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+
+    window.location.href = googleAuthUrl; // Redirect user to Google login page
+  };
+
+  // After the user has authenticated and Google redirects back to your app
+  // You need to handle the redirect and extract the access token from the URL
+  const handleGoogleRedirect = () => {
+    const params = new URLSearchParams(window.location.hash.substring(1));
+    const accessToken = params.get('access_token');
+
+    if (accessToken) {
+      // Fetch user details using the Google People API
+      fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`)
+        .then((response) => response.json())
+        .then((userData) => {
+          // Set the form data with the fetched user data
+          setFormData({
+            ...formData,
+            firstName: userData.given_name,
+            lastName: userData.family_name,
+            email: userData.email
+          });
+        })
+        .catch((error) => {
+          console.error('Error fetching user data from Google:', error);
+        });
+    }
+  };
+
+  // Check if we are on the redirect page and handle it
+  useEffect(() => {
+    if (window.location.hash) {
+      handleGoogleRedirect();
+    }
+  }, []);
 
   return (
     <Box
@@ -30,7 +94,6 @@ export default function NewUserRegister() {
       justifyContent="center"
       alignItems="center"
       height="100vh"
-      width="100%"
       sx={{ backgroundColor: '#f5f5f5' }}
     >
       <Box
@@ -38,7 +101,7 @@ export default function NewUserRegister() {
         onSubmit={handleSubmit}
         sx={{
           width: '100%',
-          maxWidth: 800,
+          maxWidth: 900,
           padding: 3,
           borderRadius: 2,
           backgroundColor: 'white',
@@ -46,7 +109,7 @@ export default function NewUserRegister() {
         }}
       >
         <Typography variant="h4" align="center" gutterBottom>
-          User Registration
+          Create Account
         </Typography>
         <Grid container spacing={2}>
           {/* First Row - First Name & Last Name */}
@@ -58,6 +121,7 @@ export default function NewUserRegister() {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+            
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -68,6 +132,7 @@ export default function NewUserRegister() {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
+           
             />
           </Grid>
 
@@ -81,6 +146,7 @@ export default function NewUserRegister() {
               type="email"
               value={formData.email}
               onChange={handleChange}
+      
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -104,6 +170,11 @@ export default function NewUserRegister() {
               value={formData.password}
               onChange={handleChange}
             />
+            {passwordStrength && (
+              <FormHelperText sx={{ color: isPasswordValid ? 'green' : 'red' }}>
+                Password Strength: {passwordStrength}
+              </FormHelperText>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -125,11 +196,28 @@ export default function NewUserRegister() {
               variant="contained"
               color="primary"
               sx={{ padding: 1.5 }}
+              disabled={!isPasswordValid} // Disable submit if password is weak
             >
               Register
             </Button>
           </Grid>
         </Grid>
+
+        {/* Google Sign-Up Link */}
+        <Box display="flex" justifyContent="space-between" mt={2}>
+          <Link
+            href="#"
+            variant="body2"
+            color="primary"
+            onClick={redirectToGoogleLogin} // Trigger Google OAuth login on click
+          >
+            Sign Up with Google
+          </Link>
+
+          <Link href="#" variant="body2" color="primary">
+            Go to Login
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
