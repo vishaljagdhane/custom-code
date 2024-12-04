@@ -7,13 +7,10 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-  Button,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 export default function LeftSidePanel({ isDrawerOpen, onNavigate, menuItems }) {
-  const [showAll, setShowAll] = useState(false); // State to toggle "Show More/Less"
+  const [showAll, setShowAll] = useState(false);
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
@@ -31,8 +28,7 @@ export default function LeftSidePanel({ isDrawerOpen, onNavigate, menuItems }) {
         "& .MuiDrawer-paper": {
           width: "20%",
           boxSizing: "border-box",
-     borderRight: "1px solid #ccc",
-        //   bgcolor: "#E3F2FD", // Light blue theme background
+          borderRight: "1px solid #ccc",
         },
       }}
     >
@@ -41,7 +37,7 @@ export default function LeftSidePanel({ isDrawerOpen, onNavigate, menuItems }) {
         sx={{
           width: "100%",
           height: "65px",
-          bgcolor: "#1976D2", // Blue Header
+          bgcolor: "#1976D2",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -56,43 +52,61 @@ export default function LeftSidePanel({ isDrawerOpen, onNavigate, menuItems }) {
       </Box>
 
       {/* Menu Items List */}
-      <List>
-        {visibleItems.map((item) => (
-          <ListItem
-            button
-            key={item.label}
-            onClick={() => onNavigate(item.page)}
-            sx={{
-              "&:hover": { bgcolor: "#BBDEFB" },
-              transition: "all 0.2s",
-            }}
-          >
-            <ListItemIcon sx={{ color: "#64B5F6" }}>{item.icon}</ListItemIcon>
-            <ListItemText
-              primary={item.label}
-              sx={{ color: "#0D47A1", fontWeight: "medium" }}
-            />
-          </ListItem>
-        ))}
-      </List>
+      <Box
+        sx={{
+          height: "calc(100% - 130px)", // Subtract the height of the header and footer
+          overflowY: "auto",
+        }}
+      >
+        <List
+          sx={{
+            position: "relative",
+            top: 80,
+            height: "50vh", // Set the desired height
+            overflowY: "auto", // Enable vertical scrolling
+            border: "1px solid #ccc", // Optional: for visual separation
+          }}
+        >
+          {visibleItems.map((item) => (
+            <ListItem
+              button
+              key={item.label}
+              onClick={() => onNavigate(item)} // Pass the clicked item
+              sx={{
+                "&:hover": { bgcolor: "#BBDEFB" },
+                transition: "all 0.2s",
+                borderBottom: "1px solid",
+                cursor: "pointer",
+              }}
+            >
+              <ListItemIcon sx={{ color: "#64B5F6" }}>{item.icon}</ListItemIcon>
+              <ListItemText
+                primary={item.label}
+                sx={{ color: "#0D47A1", fontWeight: "medium" }}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
 
-      {/* Show More/Less Button */}
-      {menuItems.length > 10 && (
-        <Box sx={{ textAlign: "center", my: 2 }}>
-          <Button
-            variant="outlined"
-            startIcon={showAll ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            onClick={toggleShowAll}
-            sx={{
-              color: "#1976D2",
-              borderColor: "#1976D2",
-              "&:hover": { bgcolor: "#BBDEFB", borderColor: "#1976D2" },
-            }}
-          >
-            {showAll ? "Show Less" : "Show More"}
-          </Button>
-        </Box>
-      )}
+      {/* About Software Box */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "65px",
+          bgcolor: "#1976D2",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{ color: "#FFFFFF", fontWeight: "bold", textAlign: "center" }}
+        >
+          About Software
+        </Typography>
+      </Box>
     </Drawer>
   );
 }

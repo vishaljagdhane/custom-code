@@ -12,8 +12,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useNavigate } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 export default function ApplicationBar({
   isDrawerOpen,
   toggleDrawer,
@@ -50,9 +50,27 @@ export default function ApplicationBar({
           {isDrawerOpen ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
 
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          {currentPage} {/* Dynamically display the current active page name */}
-        </Typography>
+        <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+      {/* Dashboard Text */}
+      <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Dashboard</span>
+
+      {/* Arrow Icon */}
+      <ArrowRightIcon sx={{ marginLeft: 1, fontSize: 30, lineHeight: 1, color: 'text.secondary' }} />
+
+      {/* Current Page Name */}
+      <NavLink
+        to={`/${currentPage}`} // Assuming currentPage is a route, adjust accordingly
+        style={{
+          textDecoration: 'none',
+          color: 'inherit',
+          marginLeft: 1,
+          fontWeight: 'bold',
+          fontSize: '1.2rem',
+        }}
+      >
+        {currentPage}
+      </NavLink>
+    </Typography>
 
         <TextField
           variant="outlined"
