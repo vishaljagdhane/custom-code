@@ -26,7 +26,7 @@ export default function LeftSidePanel({ isDrawerOpen, onNavigate, menuItems }) {
       open={isDrawerOpen}
       sx={{
         "& .MuiDrawer-paper": {
-          width: "20%",
+          width: "13%",
           boxSizing: "border-box",
           borderRight: "1px solid #ccc",
         },

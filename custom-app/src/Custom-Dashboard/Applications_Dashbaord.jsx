@@ -14,6 +14,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import ReportIcon from "@mui/icons-material/Report";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import DashboardPages from "../pages/DashboardPages";
 
 export default function Applications_Dashboard() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -21,15 +22,9 @@ export default function Applications_Dashboard() {
 
   // Define menuItems before using them
   const menuItems = [
-    { label: "Dashboard", page: <NewUserRegister />, icon: <DashboardIcon />, pagetile: "Dashboard" },
-    { label: "Home", page: <h1>Home Page</h1>, icon: <HomeIcon />, pagetile: "Home" },
-    { label: "About", page: <h1>About Page</h1>, icon: <InfoIcon />, pagetile: "About" },
-    { label: "Purchase Orders", page: <h1>Purchase Orders Page</h1>, icon: <ShoppingCartIcon />, pagetile: "Purchase Orders" },
-    { label: "Inventory Management", page: <h1>Inventory Management Page</h1>, icon: <InventoryIcon />, pagetile: "Inventory" },
-    { label: "Vendor Master", page: <h1>Vendor Master Page</h1>, icon: <PersonIcon />, pagetile: "Vendor Master" },
-    { label: "Goods Receipt", page: <h1>Goods Receipt Page</h1>, icon: <ReceiptIcon />, pagetile: "Goods Receipt" },
-    { label: "Reports", page: <h1>Reports Page</h1>, icon: <ReportIcon />, pagetile: "Reports" },
-    { label: "Tasks", page: <h1>Tasks Page</h1>, icon: <AssignmentIcon />, pagetile: "Tasks" },
+    { label: "Dashboard", page: <DashboardPages/>, icon: <DashboardIcon />, pagetile: "Dashboard" },
+    { label: "Create User", page: <NewUserRegister/>, icon: <DashboardIcon />, pagetile: "Dashboard" },
+
   ];
 
   // Set initial page to the first menu item (if available)
@@ -61,8 +56,8 @@ export default function Applications_Dashboard() {
         <Box
           sx={{
             flexGrow: 1,
-            marginLeft: isDrawerOpen ? "20%" : "0",
-            width: isDrawerOpen ? "80%" : "100%",
+            marginLeft: isDrawerOpen ? "13.5%" : "0",
+            width: isDrawerOpen ? "100%" : "100%",
             transition: "margin 0.3s ease, width 0.3s ease",
             display: "flex",
             flexDirection: "column",
@@ -83,7 +78,7 @@ export default function Applications_Dashboard() {
             }}
           >
             {/* Render the page content based on the selected menu item */}
-            <Box sx={{position:'relative',padding:'5px'}}>
+            <Box sx={{position:'relative',padding:'5px',marginTop:'70px',marginBottom:'10px',borderRadius:'5px',border:'1px solid #ccc',height:'calc(100vh - 120px)',overflowY:'auto'}}>
             {currentPage ? currentPage.page : <h1>Loading...</h1>}
             </Box>
           </Box>
