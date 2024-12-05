@@ -93,8 +93,9 @@ export default function NewUserRegister() {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      height="100vh"
-      sx={{ backgroundColor: '#f5f5f5' }}
+      // height="100vh"
+      
+      sx={{  position: 'relative',top: 30, }}
     >
       <Box
         component="form"

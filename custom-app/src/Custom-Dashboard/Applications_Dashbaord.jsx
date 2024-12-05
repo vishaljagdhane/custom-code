@@ -78,7 +78,7 @@ export default function Applications_Dashboard() {
             }}
           >
             {/* Render the page content based on the selected menu item */}
-            <Box sx={{position:'relative',padding:'5px',marginTop:'70px',marginBottom:'10px',borderRadius:'5px',border:'1px solid #ccc',height:'calc(100vh - 120px)',overflowY:'auto'}}>
+            <Box sx={{position:'relative',padding:'5px',marginTop:'50px',marginBottom:'10px',border:'1px solid #ccc',height:'calc(100vh - 120px)',overflowY:'hidden'}}>
             {currentPage ? currentPage.page : <h1>Loading...</h1>}
             </Box>
           </Box>
